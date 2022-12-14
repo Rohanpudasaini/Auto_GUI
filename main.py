@@ -1,8 +1,9 @@
 # import functions
 from pathlib import Path
+import PySimpleGUI as sg
 from docx2pdf import convert
+import shutil
 import os
-import time
 import pandas as pd  # pip install pandas openpyxl
 from docxtpl import DocxTemplate  # pip install docxtpl
 base_dir = Path(__file__).parent
@@ -10,25 +11,10 @@ excel_path1 = base_dir / "Project RP07 Letter.xlsx"
 excel_path2 = base_dir / "Project RP07 Letter2 .xlsx"
 output_dir = base_dir / "OUTPUT1"
 output_dir1 = base_dir / "OUTPUT2"
+Temp1 = base_dir / "Templates1"
+Temp2 = base_dir / "Templates2"
+sg.theme('Dark Grey 13')
 
-def get_basic():
-    os.system("cls||clear")
-    print(" *******            **                        ".center(100))
-    print("/**////**          /**                        ".center(100))
-    print("/**   /**   ****** /**       ******   ******* ".center(100))
-    print("/*******   **////**/******  //////** //**///**".center(100))
-    print("/**///**  /**   /**/**///**  *******  /**  /**".center(100))
-    print("/**  //** /**   /**/**  /** **////**  /**  /**".center(100))
-    print("/**   //**//****** /**  /**//******** ***  /**".center(100))
-    print("//     //  //////  //   //  //////// ///   ///".center(100)) 
-    print("\n"+"::Welcome To Converter::".center(100))
-    print("Choose Your Request:".center(100))
-    print('''
-                1) Scenario 1
-                2) Scenario 2
-                3) Exit    
-
-        ''')
 def convert_pdf():
     path = output_dir
     os.chdir(path)
@@ -116,7 +102,11 @@ def scenerio_1():
         record['c5'] = (str(record['Company_Number']))[4]
         record['c6'] = (str(record['Company_Number']))[5]
         record['c7'] = (str(record['Company_Number']))[6]
-        record['c8'] = (str(record['Company_Number']))[7]
+        # record['c8'] = (str(record['Company_Number']))[7]
+        try:
+            record['c8'] = (record['Company_Number'])[7]
+        except:
+            print("List out of values")
 
         doc = DocxTemplate(word_template_path1)
         # get_payment()
@@ -142,6 +132,7 @@ def scenerio_1():
         os.system(f"mkdir {(record['Company_Name'].split())[0]} ")
         convert_pdf()
         os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{(record['Company_Name'].split())[0]}")
+        
 
 def scenerio_2():
     word_template_path1 = base_dir / "Templates2/RP07 Letter.docx"
@@ -207,7 +198,11 @@ def scenerio_2():
         record['c5'] = (str(record['Company_Number']))[4]
         record['c6'] = (str(record['Company_Number']))[5]
         record['c7'] = (str(record['Company_Number']))[6]
-        record['c8'] = (str(record['Company_Number']))[7]
+        # record['c8'] = (str(record['Company_Number']))[7]
+        try:
+            record['c8'] = (record['Company_Number'])[7]
+        except:
+            print("List out of values")
 
         doc = DocxTemplate(word_template_path1)
         # get_payment()
@@ -224,28 +219,33 @@ def scenerio_2():
         os.system(f"mkdir {(record['Company_Name'].split())[0]} ")
         convert_pdf2()
         os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{(record['Company_Name'].split())[0]}")
+        if "Chadwell" in record['Location']:
+            shutil.copy(f"{Temp2}\\Chadwell Heath Address Proof.pdf",f"{(record['Company_Name'].split())[0]}")
+        if "East" in record['Location']:
+            shutil.copy(f"{Temp2}\\East Ham Address Proof.pdf",f"{(record['Company_Name'].split())[0]}")
+        if "Hainault" in record['Location']:
+            shutil.copy(f"{Temp2}\\Hainault Address Proof.pdf",f"{(record['Company_Name'].split())[0]}")
+        if "Hatton" in record['Location']:
+            shutil.copy(f"{Temp2}\\Hatton Garden Lease.pdf",f"{(record['Company_Name'].split())[0]}")
 
+layout = [
+    [sg.Text("Welcome User", justification="centre")],
+    [sg.Button("Scenario 1")],
+    [sg.Button("Scenario 2")],
+    [sg.Exit()]
+]
 
-get_basic()
+window = sg.Window("Excel 2 Pdf Maker 1.0", layout , size=(400, 200) , grab_anywhere=True, element_justification='c' )
+
 while True:
-    inp = int(input("Enter your Choice::"))
-
-    if inp == 1:
-        scenerio_1()
-        out = 0
-    elif inp == 2:
-        scenerio_2()
-        out = 0
-    elif inp == 4:
-        out = "comming soon"
-    elif inp == 3:
-
-        os.system("cls||clear")
+    event , values = window.read()
+    if event in (sg.WINDOW_CLOSED,"Exit"):
         break
-    else:
-        out = "Not Valid"
-      
-    os.system("cls||clear")
-    get_basic()
-    if out != 0:
-        print(out)
+    if event == "Scenario 1":
+        scenerio_1()
+        sg.popup_no_titlebar(f"Done Scenerio 1")
+    if event == "Scenario 2":
+        scenerio_2()
+        sg.popup_no_titlebar(f"Done Scenerio 2")
+
+window.close()
