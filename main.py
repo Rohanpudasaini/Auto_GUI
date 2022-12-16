@@ -102,11 +102,7 @@ def scenerio_1():
         record['c5'] = (str(record['Company_Number']))[4]
         record['c6'] = (str(record['Company_Number']))[5]
         record['c7'] = (str(record['Company_Number']))[6]
-        # record['c8'] = (str(record['Company_Number']))[7]
-        try:
-            record['c8'] = (record['Company_Number'])[7]
-        except:
-            print("List out of values")
+        record['c8'] = (str(record['Company_Number']))[7]
 
         doc = DocxTemplate(word_template_path1)
         # get_payment()
@@ -131,7 +127,7 @@ def scenerio_1():
         os.chdir(f"{output_dir}")
         os.system(f"mkdir {(record['Company_Name'].split())[0]} ")
         convert_pdf()
-        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{(record['Company_Name'].split())[0]}")
+        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{(record['Company_Name'].split())[0]} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{(record['Company_Name'].split())[0]} ")
         
 
 def scenerio_2():
@@ -198,11 +194,8 @@ def scenerio_2():
         record['c5'] = (str(record['Company_Number']))[4]
         record['c6'] = (str(record['Company_Number']))[5]
         record['c7'] = (str(record['Company_Number']))[6]
-        # record['c8'] = (str(record['Company_Number']))[7]
-        try:
-            record['c8'] = (record['Company_Number'])[7]
-        except:
-            print("List out of values")
+        record['c8'] = (str(record['Company_Number']))[7]
+        
 
         doc = DocxTemplate(word_template_path1)
         # get_payment()
@@ -218,7 +211,7 @@ def scenerio_2():
         os.chdir(f"{output_dir1}")
         os.system(f"mkdir {(record['Company_Name'].split())[0]} ")
         convert_pdf2()
-        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{(record['Company_Name'].split())[0]}")
+        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{(record['Company_Name'].split())[0]} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{(record['Company_Name'].split())[0]}")
         if "Chadwell" in record['Location']:
             shutil.copy(f"{Temp2}\\Chadwell Heath Address Proof.pdf",f"{(record['Company_Name'].split())[0]}")
         if "East" in record['Location']:
