@@ -78,22 +78,25 @@ def scenerio_1():
             record['Email']= "  "
         if record['Contact_No'] == "nan":
             record['Contact_No']= "  "
+        
+        x = len(record['RP07_ADDRESS_POSTCODE'])
+        if x != 8:
+            record['RP07_ADDRESS_POSTCODE'] = record['RP07_ADDRESS_POSTCODE'] + " "*(8-x)
 
-        record['p1'] = (record['Address_P'])[0]
-        record['p2'] = (record['Address_P'])[1]
-        record['p3'] = (record['Address_P'])[2]
-        record['p4'] = (record['Address_P'])[3]
-        record['p5'] = (record['Address_P'])[4]
-        record['p6'] = (record['Address_P'])[5]
+        record['p1'] = (record['RP07_ADDRESS_POSTCODE'])[0]
+        record['p2'] = (record['RP07_ADDRESS_POSTCODE'])[1]
+        record['p3'] = (record['RP07_ADDRESS_POSTCODE'])[2]
+        record['p4'] = (record['RP07_ADDRESS_POSTCODE'])[3]
+        record['p5'] = (record['RP07_ADDRESS_POSTCODE'])[4]
+        record['p6'] = (record['RP07_ADDRESS_POSTCODE'])[5]
         try:
-            record['p7'] = (record['Address_P'])[6]
+            record['p7'] = (record['RP07_ADDRESS_POSTCODE'])[6]
         except:
             print("List out of values")
         try:
-            record['p8'] = (record['Address_P'])[7]
+            record['p8'] = (record['RP07_ADDRESS_POSTCODE'])[7]
         except:
             print("List out of values")
-
 
         record['c1'] = (str(record['Company_Number']))[0]
         record['c2'] = (str(record['Company_Number']))[1]
@@ -125,9 +128,9 @@ def scenerio_1():
         doc4.save(output_path3)
         # os.chdir(r"E:\python\OUTPUT")
         os.chdir(f"{output_dir}")
-        os.system(f"mkdir {(record['Company_Name'].split())[0]} ")
+        os.system(f"mkdir {record['Company_Number']} ")
         convert_pdf()
-        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{(record['Company_Name'].split())[0]} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{(record['Company_Name'].split())[0]} ")
+        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{record['Company_Number']} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{record['Company_Number']} ")
         
 
 def scenerio_2():
@@ -169,21 +172,21 @@ def scenerio_2():
         record['Net'] = round(float(record['Price']) - float(record['Vat']), 2)
         if record['Email'] == "nan":
             record['Email']= "  "
-        if record['Contact_No'] == "nan":
+        if record['Contact_No'] == "":
             record['Contact_No']= "  "
         
-        record['p1'] = (record['Address_P'])[0]
-        record['p2'] = (record['Address_P'])[1]
-        record['p3'] = (record['Address_P'])[2]
-        record['p4'] = (record['Address_P'])[3]
-        record['p5'] = (record['Address_P'])[4]
-        record['p6'] = (record['Address_P'])[5]
+        record['p1'] = (record['RP07_ADDRESS_POSTCODE'])[0]
+        record['p2'] = (record['RP07_ADDRESS_POSTCODE'])[1]
+        record['p3'] = (record['RP07_ADDRESS_POSTCODE'])[2]
+        record['p4'] = (record['RP07_ADDRESS_POSTCODE'])[3]
+        record['p5'] = (record['RP07_ADDRESS_POSTCODE'])[4]
+        record['p6'] = (record['RP07_ADDRESS_POSTCODE'])[5]
         try:
-            record['p7'] = (record['Address_P'])[6]
+            record['p7'] = (record['RP07_ADDRESS_POSTCODE'])[6]
         except:
             print("List out of values")
         try:
-            record['p8'] = (record['Address_P'])[7]
+            record['p8'] = (record['RP07_ADDRESS_POSTCODE'])[7]
         except:
             print("List out of values")
 
@@ -209,17 +212,17 @@ def scenerio_2():
 
         # os.chdir(r"E:\python\OUTPUT")
         os.chdir(f"{output_dir1}")
-        os.system(f"mkdir {(record['Company_Name'].split())[0]} ")
+        os.system(f"mkdir {record['Company_Number']} ")
         convert_pdf2()
-        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{(record['Company_Name'].split())[0]} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{(record['Company_Name'].split())[0]}")
+        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{record['Company_Number']} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{record['Company_Number']}")
         if "Chadwell" in record['Location']:
-            shutil.copy(f"{Temp2}\\Chadwell Heath Address Proof.pdf",f"{(record['Company_Name'].split())[0]}")
+            shutil.copy(f"{Temp2}\\Chadwell Heath Address Proof.pdf",f"{record['Company_Number']}")
         if "East" in record['Location']:
-            shutil.copy(f"{Temp2}\\East Ham Address Proof.pdf",f"{(record['Company_Name'].split())[0]}")
+            shutil.copy(f"{Temp2}\\East Ham Address Proof.pdf",f"{record['Company_Number']}")
         if "Hainault" in record['Location']:
-            shutil.copy(f"{Temp2}\\Hainault Address Proof.pdf",f"{(record['Company_Name'].split())[0]}")
+            shutil.copy(f"{Temp2}\\Hainault Address Proof.pdf",f"{record['Company_Number']}")
         if "Hatton" in record['Location']:
-            shutil.copy(f"{Temp2}\\Hatton Garden Lease.pdf",f"{(record['Company_Name'].split())[0]}")
+            shutil.copy(f"{Temp2}\\Hatton Garden Lease.pdf",f"{record['Company_Number']}")
 
 layout = [
     [sg.Text("Welcome User", justification="centre")],
