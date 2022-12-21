@@ -83,6 +83,10 @@ def scenerio_1():
         if x != 8:
             record['RP07_ADDRESS_POSTCODE'] = record['RP07_ADDRESS_POSTCODE'] + " "*(8-x)
 
+        y = (record['RP07_ADDRESS_FIELD2'])
+        if y == "nan":
+            record['RP07_ADDRESS_FIELD2'] = " "
+
         record['p1'] = (record['RP07_ADDRESS_POSTCODE'])[0]
         record['p2'] = (record['RP07_ADDRESS_POSTCODE'])[1]
         record['p3'] = (record['RP07_ADDRESS_POSTCODE'])[2]
@@ -174,6 +178,14 @@ def scenerio_2():
             record['Email']= "  "
         if record['Contact_No'] == "":
             record['Contact_No']= "  "
+
+        x = len(record['RP07_ADDRESS_POSTCODE'])
+        if x != 8:
+            record['RP07_ADDRESS_POSTCODE'] = record['RP07_ADDRESS_POSTCODE'] + " "*(8-x)
+
+        y = (record['RP07_ADDRESS_FIELD2'])
+        if y == "nan":
+            record['RP07_ADDRESS_FIELD2'] = " "
         
         record['p1'] = (record['RP07_ADDRESS_POSTCODE'])[0]
         record['p2'] = (record['RP07_ADDRESS_POSTCODE'])[1]
