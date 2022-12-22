@@ -134,8 +134,11 @@ def scenerio_1():
         os.chdir(f"{output_dir}")
         os.system(f"mkdir {record['Company_Number']} ")
         convert_pdf()
-        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{record['Company_Number']} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{record['Company_Number']} ")
-        
+        # os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{record['Company_Number']} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir}/{record['Company_Number']} ")
+        for k in os.listdir():
+            if k.endswith(".pdf") and record['Company_Name'] in k:
+                shutil.move(k, f"{record['Company_Number']}")
+
 
 def scenerio_2():
     word_template_path1 = base_dir / "Templates2/RP07 Letter.docx"
@@ -226,7 +229,11 @@ def scenerio_2():
         os.chdir(f"{output_dir1}")
         os.system(f"mkdir {record['Company_Number']} ")
         convert_pdf2()
-        os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{record['Company_Number']} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{record['Company_Number']}")
+        # os.system(f"move {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{record['Company_Number']} || mv {(record['Company_Name'].split())[0]}*.pdf {output_dir1}/{record['Company_Number']}")
+        for k in os.listdir():
+            if k.endswith(".pdf") and record['Company_Name'] in k:
+                shutil.move(k, f"{record['Company_Number']}")
+        
         if "Chadwell" in record['Location']:
             shutil.copy(f"{Temp2}\\Chadwell Heath Address Proof.pdf",f"{record['Company_Number']}")
         if "East" in record['Location']:
